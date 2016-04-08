@@ -1,2 +1,6 @@
+
 # minimal
-Minimal website styles and behaviors.
+
+A minimalist base of styles and behaviours.
+
+http://minimal.hagstrand.com
