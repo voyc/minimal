@@ -32,30 +32,35 @@ Minimal.prototype = {
 		}
 	},
 
+	show: function(eid) {
+		var e = $(eid);
+		if (e.hasAttribute('hidden')) {
+			e.removeAttribute('hidden');
+		}
+		else {
+			$(f).setAttribute('hidden', '');
+		} 
+	},
+
+	hide: function(eid) {
+		var e = $(eid);
+		e.setAttribute('hidden', '');
+	},
+
 	attachShowHide: function(element) {
 		var elem = element || document;
 		var elems = elem.querySelectorAll('[show]');
 		for (var i=0; i<elems.length; i++) {
 			elems[i].addEventListener('click', function(event) {
-				var d = event.currentTarget;
-				var f = d.getAttribute('show');
-				var b = $(f).hasAttribute('hidden');
-				if (b) {
-					$(f).removeAttribute('hidden');
-					$(f).dispatchEvent(new Event('show'))
-				}
-				else {
-					$(f).setAttribute('hidden', '');
-					$(f).dispatchEvent(new Event('hide'))
-				} 
+				var eid = event.currentTarget.getAttribute('show');
+				this.show(eid);
 			}, false);
 		}
 		elems = elem.querySelectorAll('[hide]');
 		for (var i=0; i<elems.length; i++) {
 			elems[i].addEventListener('click', function(event) {
-				var d = event.currentTarget;
-				var f = d.getAttribute('hide');
-				$(f).setAttribute('hidden', '');
+				var eid = event.currentTarget.getAttribute('hide');
+				this.hide(eid);
 			}, false);
 		}
 	},
@@ -107,19 +112,18 @@ Minimal.prototype = {
 	},
 	
 	attachOpenClose: function(element) {
-		var elem = element || document;
-		var elems = elem.querySelectorAll('[open]');
+		var doc = element || document;
+		var elems = doc.querySelectorAll('[open]');
 		var self = this;
 		for (var i=0; i<elems.length; i++) {
 			elems[i].addEventListener('click', function(event) {
-				var n = event.currentTarget.getAttribute('open');
-				self.openPopup($(n));
+				var eid = event.currentTarget.getAttribute('open');
+				self.openPopup(eid);
 			}, false);
 		}
-		elems = elem.querySelectorAll('[close]');
+		elems = doc.querySelectorAll('[close]');
 		for (var i=0; i<elems.length; i++) {
 			elems[i].addEventListener('click', function(event) {
-				var n = event.currentTarget.getAttribute('close');
 				self.closePopup();
 			}, false);
 		}
@@ -282,25 +286,50 @@ Minimal.prototype = {
 		});
 	},
 	
-	closePopup: function() {
-		if (this.popup) {
-			this.popup.classList.remove('open');
-		}
-		this.popup = null;
-		window.removeEventListener('click', clickAnywhereToClose, false);
+	wait: function() {
+		this.show('wait');
+	},
+	
+	killWait: function() {
+		this.hide('wait');
 	},
 
-	openPopup: function(e) {
+	closePopup: function() {
+		this.killWait();
+		if (this.popup) {
+			if (this.popup.hasAttribute('modal')) {
+				this.popup.reset();
+				$('dialog-msg').innerHTML = '';
+				$('modalcontainer').setAttribute('hidden','')
+				$('offscreen').appendChild(this.popup);
+			}
+			else {
+				this.popup.classList.remove('open');
+				window.removeEventListener('click', clickAnywhereToClose, false);
+			}
+			this.popup = null;
+		}
+	},
+
+	openPopup: function(eid) {
+		var prev = this.popup;
 		if (this.popup) {
 			this.closePopup();
 		}
-		var b = e.classList.toggle('open');
-		this.popup = e;
-
-		// if this is modeless open, add global click handler to close
-		setTimeout(function() {
-			window.addEventListener('click', clickAnywhereToClose, false);
-		}, 25);
+		if (!prev || prev.id != eid) {
+			if ($(eid).hasAttribute('modal')) {
+				$('modalcontainer').removeAttribute('hidden');
+				$('dialog').appendChild($(eid));
+				$('modaltitle').innerHTML = $(eid).getAttribute('title')
+			}
+			else {
+				$(eid).classList.add('open');
+				setTimeout(function() {
+					window.addEventListener('click', clickAnywhereToClose, false);
+				}, 25);
+			}
+			this.popup = $(eid);
+		}
 	},
 }
 
@@ -322,6 +351,25 @@ clickAnywhereToClose = function(event) {
 		var m = new Minimal();
 		m.closePopup();
 	}
+}
+
+show = function(eid) {
+	(new Minimal).show(eid);
+}
+hide = function(eid) {
+	(new Minimal).hide(eid);
+}
+openPopup = function(eid) {
+	(new Minimal).openPopup(eid);
+}
+closePopup = function() {
+	(new Minimal).closePopup();
+}
+wait = function() {
+	(new Minimal).wait();
+}
+killWait = function() {
+	(new Minimal).killWait();
 }
 
 /* 

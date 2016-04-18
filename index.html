@@ -5,28 +5,30 @@
 		<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1'>
 		<title>Minimal</title>
 		<style>[hidden] {display:none ! important;}</style>
+		
+		<!-- submodules required for minimal -->
 		<link  href='normalize.css/normalize.css' rel='stylesheet' type='text/css'></link>
-		<link  href='minimal.css' rel='stylesheet' type='text/css'></link>
 		<link  href='icon/icon.css' rel='stylesheet' type='text/css'></link>
-		<script src='minimal.js'></script>
 		<script src='icon/icon.js'></script>
 		<script src='icon/lib/menu.js'></script>
 		<script src='icon/lib/gear.js'></script>
 		<script src='jslib/utils.js'></script>
 		<script src='jslib/dragger.js'></script>
+
+		<!-- minimal -->
+		<link  href='minimal.css' rel='stylesheet' type='text/css'></link>
+		<script src='minimal.js'></script>
 	</head>
 	<body>
 		<header class='fixed'>
-			<hdr>
-				<icon type='draw' name='menu' class='' open='leftnav-modeless'></icon>
-				<span id='hdrtitle' style='vertical-align:middle'>Minimal</span>
-			</hdr>
-			<hdr style='text-align:right'>
-				<icon type=draw name=gear class='' open='dropdown-modeless'></icon>
+			<div class='group'>
+				<icon class='bit' type='draw' name='menu' open='leftnav-modeless'></icon>
+				<div class='bit hdr' id='hdrtitle'>Minimal</div>
+			</div>
+			<div class='group tright'>
+				<icon class='bit' type=draw name=gear open='dropdown-modeless'></icon>
 			</hdr>
 		</header>
-
-		<!--- begin unique application --->
 
 		<section class='narrative' id='narrative-section'>
 			<h1>Minimal</h1>
@@ -146,14 +148,26 @@
 				<button class='btn grn'>Green</button>
 				<button class='btn red'>Red</button>
 			</p>
-			<p>A future exercise.  Make an anchor look like a button.</p>
+			<p>Or, add the .button class to an anchor.</p>
 			<div class='horz'>
+				<a href='#">Default</a>
 				<a class='btn wht'>White  </a>
 				<a class='btn ylo'>Yellow </a>
 				<a class='btn blu'>Blue   </a>
 				<a class='btn grn'>Green  </a>
 				<a class='btn red'>Red    </a>
 			</div>
+
+			<h3>.anchor</h3>
+			<p>Add the .anchor class to a button element.  In normal usage, we use the anchor to go to another page, and a button to execute some operation on this page.  But sometimes we seem to want the button to look like an anchor.</p>
+			<p>
+				<button>Default</button>
+				<button class='anchor wht'>White</button>
+				<button class='anchor ylo'>Yellow</button>
+				<button class='anchor blu'>Blue</button>
+				<button class='anchor grn'>Green</button>
+				<button class='anchor red'>Red</button>
+			</p>
 
 			<h3>.fixed</h3>
 			<p>Add the .fixed class to the header element, and it will not scroll along with the rest of the body.</p>
@@ -165,24 +179,31 @@
 			<p>Behaviour is implemented by adding attributes to elements.</p>
 
 			<h3>Initially Hidden</h3>
-			<p class='indent'><code>[initially] [hidden]</code></p>
-			<p>Our modeless dialogs each have some css style that hides it from view until it is opened.</p>
-			<p>We want screen readers to know these dialogs are initially hidden,
-			even without the presence of the ccs files.
-			And so we add two attributes to each dialog - initially and hidden - 
-			both of which are removed when the js file loads.</p>
+			<p class='indent'><code>[initially hidden]</code></p>
+
+			<p>We use the The HTML "hidden" attribute when we want to make sure an element is not visible during startup, while waiting for the stylesheet to load.</p>
+
+			<p>When we combine it with the "initially" attribute, both attributes are removed immediately after successful startup.</p>
+
+			<p> We use this on our modeless dialogs.  
+			Our modeless dialogs each have some css style that hides it from view until it is opened.
+			By adding "initially hidden" we let screen readers know these dialogs are initially hidden,
+			even without the presence of the ccs files.  And we also avoid the flashing effect that can occur if the element is visible while waiting for the stylesheet to load.</p>
 
 			<h3>Show/Hide</h3>
 			<p>We can add the show= attribute to a button to open an element, and add the hide= tag to a close button for that element.</p>
 			<p class='indent'><code>[show=&lt;element-id&gt;]<br/>
 			[hide=&lt;element-id&gt;]</code></p>
 			<p>The operation works by adding and removing the [hidden] attribute to the element.</p>
-			<p>We have no example for this because in our implementations so far
-			we have chosen instead to use one of two alternative behaviors: 
-			<ul>
-				<li>expand/collapse, for n detail sections, and </li>
-				<li>open/close, for modeless dialogs.</li>
-			</ul>
+			<div class='tcenter'>
+				<button show='yellowbox'>Show</button>
+				<div hidden class='box ylo' style='margin:0' id='yellowbox'>
+					<p>Peek-a-Boo</p>
+				</div>
+				<button hide='yellowbox'>Hide</button>
+			</div>
+			<p></p>
+			<figcaption>Demo 1. Show and Hide an Element</figcaption>
 
 			<h3>Expand/Collapse</h3>
 			<p class='indent'><code>[expand=&lt;element-id&gt;]<br/>
@@ -194,22 +215,29 @@
 			<p hidden id='morecollapse'>The collapse attribute is not needed, because the [expand=] attribute creates a toggle button which does both the expand and the collapse.</p>
 
 			<h3>Open/Close</h3>
+
 			<p class='indent'><code>[open=&lt;element-id&gt;]<br/>
-			[close=&lt;element-id&gt;]</code></p>
-			<p>Similar to show/hide with a transition.  Designed for modeless dialogs.</p>
-			<p>We define the dialog html with the [hidden] attribute but that is just for the initial display.
-			On startup we remove the [hidden] attribute and replace it with the .closed class.
-			The .closed class must be styled in a way that hides the dialog, like for example with visibility=hidden or left:-200px.</p>
+			[modal open=&lt;element-id&gt;]<br/>
+			[close]</code></p>
+
+			<p>Open and close a dialog box.
+			By default, the dialog is opened as modeless.  Add the [modal] attribute to make it modal.</p>
 
 			<p>LeftNav example.  Using class .leftnav.  <button open='leftnav-modeless'>Left-Nav Modeless</button></p>
 			<p>Dropdown example.  Using class .dropdown.  <button open='dropdown-modeless'>Dropdown Modeless</button></p>
+			<p>Modal example: <button open='login'>Centered Modal</button></p>
 
-			<h3>Modal Dialog</h3>
-			<p>We define a single modal dialog container.
+			<p>How a modeless dialog works. 
+			The dialog is assigned a class that hides the dialog, 
+			like for example with visibility=hidden or left:-200px.
+			When opened, the "open" class is added that brings the dialog into view, perhaps with a transition.
+			Note also, the dialog is defined with "initially hidden" attributes (see above.)</p>
+			
+			<p>How a modal dialog works.
+			We define a single modal dialog container.
 			Multiple dialog forms are defined in a hidden section of HTML.
-			On openModal(), a specified form is moved into the container with appendChild(),
-			and then the container is shown by removing its [hidden] attribute.</p>
-			<p>Example: <button show='modalcontainer'>Centered Modal</button></p>
+			On open, the specified form is moved into the container with appendChild(),
+			and then the container is made visible.</p>
 
 			<h3>Drag and Drop</h3>
 			<p>Add the drag attribute to any element to make it draggable.
@@ -221,7 +249,7 @@
 					<div drag style='color:red;'>Drag Me!</div>
 				</div>
 				<div drop style='margin:1rem;width:20em;height:3em;color:black;background-color:yellow;'>Drop him here!</div>
-				<figcaption>Demo 1. Drag red object onto yellow object.</figcaption>
+				<figcaption>Demo 2. Drag red object onto yellow object.</figcaption>
 			</figure>
 
 			<p>Add the draglist attribute to a ul element to make every item in the list draggable.
@@ -580,9 +608,15 @@
 				</ul>
 			</p>
 
+			<p>Here endeth the narrative section.</p>
 		</section>
 
 		<!------------------------------------------------------>
+
+		<hr/>
+
+		<section id='non-narrative-section'>
+			<p>From here on we use the whole screen width and the default font.</p>
 
 			<aside class='box bred wid20'>
 				<h3>Our Designer Friends</h3>
@@ -781,11 +815,6 @@
 				</ul>
 			</aside>
 
-			<h5 expand='morepanels' class='expander collapsed'>More Panel Examples</h5>
-			<section id='morepanels' class='expandable collapsed'>
-				<p> put this somewhere else</p>
-			</section>
-
 			<aside class='panel list grn'>
 				<h3>Colors</h3>
 				<ul>
@@ -823,20 +852,21 @@
 					<li>Behavior &mdash; transition, scroll, selection</li>
 				</ul>
 			</aside>
+		</section>
 
-		<!--- end unique application --->
 
 		<!---- modeless dialogs ----------------------------------------->
+
 		<nav initially hidden class='panel popup leftnav blu' id='leftnav-modeless'>
-			<div close='leftnav-modeless' class='closex'>&times;</div>
+			<div close class='closex'>&times;</div>
 			<h3>Go To...</h3>
-			<p><a close='leftnav-modeless' href='#appearance'>Appearance</a></p>
-			<p><a close='leftnav-modeless' href='#behaviour'>Behaviour</a></p>
-			<p><a close='leftnav-modeless' href='#topics'>Topics</a></p>
-			<p><a close='leftnav-modeless' href='#alternatives'>Alternatives</a></p>
-			<p><a close='leftnav-modeless' href='#font'>Font</a></p>
-			<p><a close='leftnav-modeless' href='#color'>Color</a></p>
-			<p><a close='leftnav-modeless' href='#thoughts'>Great Thoughts</a></p>
+			<p><a close href='#appearance'>Appearance</a></p>
+			<p><a close href='#behaviour'>Behaviour</a></p>
+			<p><a close href='#topics'>Topics</a></p>
+			<p><a close href='#alternatives'>Alternatives</a></p>
+			<p><a close href='#font'>Font</a></p>
+			<p><a close href='#color'>Color</a></p>
+			<p><a close href='#thoughts'>Great Thoughts</a></p>
 		</nav>
 		<aside initially hidden class='panel popup dropdown blu' id='dropdown-modeless'>
 			<div close='dropdown-modeless' class='closex'>&times;</div>
@@ -852,14 +882,13 @@
 		</aside>
 
 		<!---- modal dialog container ----------------------------->
+
 		<div hidden id='modalcontainer' class='full smoke'>
 			<div class='centered modal'>
-				<div hide='modalcontainer' class='closex'>&times;</div>
-				<h3>Modal Title</h3>
+				<div close class='closex'>&times;</div>
+				<h3 id='modaltitle'>Modal Title</h3>
 				<p id='dialog-msg'>message</p>
 				<div id='dialog'>
-					<p><input type='text' name='both' placeholder='Username or Email' initial='empty' required='' pattern='[a-zA-Z0-9\_@.]{6,100}' title='Letters and numbers or @ or period or underscore. Length between 6 and 100.'></p>
-					<p><input type='password' name='pword' placeholder='Password' initial='empty' required='' pattern='[a-zA-Z0-9@&amp;#$%]{8,255}' title='Letters and numbers or @,&amp;,#,$,%. Length between 8 and 255.'></p>
 				</div>
 			</div>
 			<div hidden id='wait' class='smoke'>
@@ -868,8 +897,9 @@
 		</div>
 
 		<!---- forms which will be moved to modal dialog container on open ---->
-		<template hidden>
-			<form id='login' svc='ua' class='dialog' first='login-email' title='Login to Your Account'>
+
+		<div hidden id='offscreen'>
+			<form modal id='login' svc='ua' class='dialog' first='login-email' title='Login to Your Account'>
 				<p><input type='text' name='both' placeholder='Username or Email' initial='empty' required='' pattern='[a-zA-Z0-9\_@.]{6,100}' title='Letters and numbers or @ or period or underscore. Length between 6 and 100.'></p>
 				<p><input type='password' name='pword' placeholder='Password' initial='empty' required='' pattern='[a-zA-Z0-9@&amp;#$%]{8,255}' title='Letters and numbers or @,&amp;,#,$,%. Length between 8 and 255.'></p>
 				<p>
@@ -880,7 +910,7 @@
 				</p>
 				<p><input type='button' class='anchor' value='Forget your password?' form='forgot'></p>
 			</form>
-		</template>
+		</div>
 
 		<footer>
 			<a class='ftr'>github</a>
