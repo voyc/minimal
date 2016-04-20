@@ -291,7 +291,9 @@ Minimal.prototype = {
 	},
 	
 	killWait: function() {
-		this.hide('wait');
+		if ($('wait')) {
+			this.hide('wait');
+		}
 	},
 
 	closePopup: function() {
