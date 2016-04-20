@@ -376,6 +376,7 @@ footer {
     border-top: 1px solid black;
 	color:rgb(255,255,255);
     background-color: rgb(192,192,192);
+	margin-top: 1rem;
 }
 .ftr {
 	margin:.4rem;
