@@ -137,34 +137,39 @@ p,ul,ol,h1,h2,h3,h4,h5,.vert {
 .list li {
 	display:block;  /* cancels display:list-item */
 }
-.list li[drag] {
-	cursor:pointer;
-}
-.list[draglist] li:before {
-	/* replace bullet with drag handle */
-	content:'\28ff\a0';
-	color:rgb(192,192,192);
-}
-.selected {
-	background:linear-gradient(to bottom, rgba(255,215,0,.9), rgba(255,215,  0,.7));
-}
 .list table {
 	width:100%;
 }
 .list td {
 	padding:0 1rem;;
 }
-.list tr[drag] {
+
+/* drag and drop */
+.highlight {   /* set by the Dragger object */
+	border:2px solid red;
+}
+.dragging {   /* set by the Dragger object */
+	position:absolute;
+	border:2px solid dodgerblue;
+	background-color:white;
+}
+[drag] {
 	cursor:pointer;
 }
+li[drag]:before {
+	/* insert drag handle (bullet has been removed by ".list ul" above) */
+	content:'\2225\a0';
+	color:rgb(192,192,192);
+}
 
+/* selectable */
 .list[select] h3,
 .list[select] tr {
 	cursor:pointer;
 }
-
-
-
+.selected {
+	background:linear-gradient(to bottom, rgba(255,215,0,.9), rgba(255,215,  0,.7));
+}
 
 /* class popup */
 .popup { 
@@ -286,16 +291,6 @@ p,ul,ol,h1,h2,h3,h4,h5,.vert {
 }
 .expandable.collapsed { 
 	max-height:0cm;
-}
-
-/* global drag and drop styles */
-.highlight {
-	border:2px solid red;
-}
-.dragging {
-	position:absolute;
-	border:2px solid dodgerblue;
-	background-color:white;
 }
 
 /* toggle button */

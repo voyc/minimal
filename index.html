@@ -91,7 +91,7 @@
 			</aside>
 
 			<h3>.list</h3>
-			<p>Add the .list class along with .panel or .box to make a listbox.</p>
+			<p>Add the .list class along with .panel or .box to remove the bullet from the list items.</p>
 			<aside class='panel list ylo fright'>
 				<h3>Panel List</h3>
 				<ul>
@@ -257,9 +257,9 @@
 			<p class='indent'><code>[draglist]</code><br/>
 			<code>[droplist]</code></p>
 			<figure>
-				<div class='panel list'>
+				<div draglist droplist class='panel list'>
 					<h3>droplist</h3>
-					<ul draglist droplist>
+					<ul>
 						<li>b</li>
 						<li>strong</li>
 						<li>em</li>
@@ -272,9 +272,9 @@
 					</ul>
 				</div>
 
-				<div class='panel list'>
+				<div draglist drop class='panel list'>
 					<h3>draglist</h3>
-					<ul draglist drop>
+					<ul>
 						<li>pre</li>
 						<li>code</li>
 						<li>samp</li>
@@ -286,7 +286,9 @@
 			</figure>
 			
 			<h3>Selectable</h3>
-			<p>click on a list item</p>
+			<p>Click on a list item to select it.  Click on the header to select the entire list.</p>
+			<p class='indent'><code>[select]</code><br/>
+			<code>[selected]</code></p>
 			<figure>
 				<div select class='panel list blu'>
 					<h3>Gutteral Consonants</h3>
@@ -631,7 +633,7 @@
 
 			<div class='panel ylo'><h3>aside Yellow</h3><p>Lorem ipsum dolor sit<br/>amet, consectetur<br/>adipiscing elit, sed<br/>do eiusmod tempor<br/>incididunt ut labore</p></div>
 			<div class='panel blu'><h3>aside Blue</h3><p>Lorem ipsum dolor sit<br/>amet, consectetur<br/>adipiscing elit, sed<br/>do eiusmod tempor<br/>incididunt ut labore</p></div>
-			<div class='panel'>
+			<div class='panel list'>
 				<h3>Inline Tags</h3>
 				<ul>
 					<li>b</li>
@@ -657,7 +659,7 @@
 				</ul>
 			</div>
 
-			<div class='panel'>
+			<div class='panel list'>
 				<h3>HTML5 Tags</h3>
 				<ul>
 					<li>article</li>
@@ -678,9 +680,9 @@
 
 
 
-			<aside class='panel red'>
+			<aside draglist droplist class='panel list'>
 				<h3>Inline</h3>
-				<ul draglist droplist>
+				<ul>
 					<li>b</li>
 					<li>strong</li>
 					<li>em</li>
@@ -691,9 +693,9 @@
 					<li>sup</li>
 				</ul>
 			</aside>
-			<aside class='panel'>
+			<aside draglist drop class='panel list'>
 				<h3>Developer</h3>
-				<ul draglist drop>
+				<ul>
 					<li>pre</li>
 					<li>code</li>
 					<li>samp</li>
@@ -760,10 +762,10 @@
 					<li>sup</li>
 				</ul>
 			</aside>
-			<aside class='panel red drag fleft fclear'>
+			<aside draglist class='panel list fleft fclear'>
 				<h3>Drag Panel</h3>
 				<p>This panel has a<br/>list of draggable items:</p>
-				<ul draglist>
+				<ul>
 					<li>mark</li>
 					<li>small</li>
 					<li>sub</li>

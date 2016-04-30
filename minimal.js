@@ -34,12 +34,7 @@ Minimal.prototype = {
 
 	show: function(eid) {
 		var e = $(eid);
-		if (e.hasAttribute('hidden')) {
-			e.removeAttribute('hidden');
-		}
-		else {
-			$(f).setAttribute('hidden', '');
-		} 
+		e.removeAttribute('hidden');
 	},
 
 	hide: function(eid) {
@@ -50,17 +45,18 @@ Minimal.prototype = {
 	attachShowHide: function(element) {
 		var elem = element || document;
 		var elems = elem.querySelectorAll('[show]');
+		var self = this;
 		for (var i=0; i<elems.length; i++) {
 			elems[i].addEventListener('click', function(event) {
 				var eid = event.currentTarget.getAttribute('show');
-				this.show(eid);
+				self.show(eid);
 			}, false);
 		}
 		elems = elem.querySelectorAll('[hide]');
 		for (var i=0; i<elems.length; i++) {
 			elems[i].addEventListener('click', function(event) {
 				var eid = event.currentTarget.getAttribute('hide');
-				this.hide(eid);
+				self.hide(eid);
 			}, false);
 		}
 	},
@@ -238,7 +234,16 @@ Minimal.prototype = {
 
 		var drops = elem.querySelectorAll('[drop]');
 		for (var i=0; i<drops.length; i++) {
-			this.dragger.enableDrop(drops[i]);
+			// if there is a child ul, enable the ul, otherwise enable the element itself
+			var subdrops = drops[i].querySelectorAll('ul,table');
+			if (subdrops.length > 0) {
+				for (var j=0; j<subdrops.length; j++) {
+					this.dragger.enableDrop(subdrops[j]);
+				}
+			}
+			else {
+				this.dragger.enableDrop(drops[i]);
+			}
 		}
 
 		var lists = elem.querySelectorAll('[draglist]');
@@ -250,13 +255,21 @@ Minimal.prototype = {
 			}
 		}
 
-		lists = elem.querySelectorAll('ul[droplist]');
+		lists = elem.querySelectorAll('[droplist] ul');
 		for (var i=0; i<lists.length; i++) {
 			drops = lists[i].querySelectorAll('li');
-			for (var lx,j=0; j<=drops.length; j++) {
-				lx = document.createElement(drops[0].tagName);
+			if (drops.length) {
+				for (var lx,j=0; j<=drops.length; j++) {
+					lx = document.createElement(drops[0].tagName);
+					lx.setAttribute('drop', '');
+					lists[i].insertBefore(lx, drops[j]);
+					this.dragger.enableDrop(lx);
+				}
+			}
+			else {
+				var lx = document.createElement('li');
 				lx.setAttribute('drop', '');
-				lists[i].insertBefore(lx, drops[j]);
+				lists[i].appendChild(lx);
 				this.dragger.enableDrop(lx);
 			}
 		}
@@ -331,6 +344,7 @@ Minimal.prototype = {
 				}, 25);
 			}
 			this.popup = $(eid);
+			$(eid).dispatchEvent(new Event('open'))
 		}
 	},
 }
