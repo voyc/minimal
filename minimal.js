@@ -1,11 +1,11 @@
-/* 
+/** 
 	class Minimal
+	@constructor
 */
 Minimal = function() {
 	// is singleton
-	if ( arguments.callee._singletonInstance )
-		return arguments.callee._singletonInstance;
-	arguments.callee._singletonInstance = this;
+	if (Minimal._instance) return Minimal._instance;
+	else Minimal._instance = this;
 
 	this.theme = '';
 	this.popup = null;

@@ -6,7 +6,7 @@
 		<title>Minimal</title>
 		<style>[hidden] {display:none ! important;}</style>
 		
-		<!-- submodules required for minimal -->
+<?php if (false) { ?>
 		<link  href='normalize.css/normalize.css' rel='stylesheet' type='text/css'></link>
 		<link  href='icon/icon.css' rel='stylesheet' type='text/css'></link>
 		<script src='icon/icon.js'></script>
@@ -14,10 +14,15 @@
 		<script src='icon/lib/gear.js'></script>
 		<script src='jslib/utils.js'></script>
 		<script src='jslib/dragger.js'></script>
-
-		<!-- minimal -->
 		<link  href='minimal.css' rel='stylesheet' type='text/css'></link>
 		<script src='minimal.js'></script>
+<?php } else { ?>
+<!--<remove>
+		<link  href='min.css' rel='stylesheet' type='text/css'></link>
+		<script src='min.js'></script>
+<remove>-->
+<?php } ?>
+
 	</head>
 	<body>
 		<header class='fixed'>
