@@ -7,6 +7,7 @@
 		<style>[hidden] {display:none ! important;}</style>
 		
 <?php if (false) { ?>
+		<script>/** @const */ var voyc = {}; window['voyc'] = {};</script>
 		<link  href='normalize.css/normalize.css' rel='stylesheet' type='text/css'></link>
 		<link  href='icon/icon.css' rel='stylesheet' type='text/css'></link>
 		<script src='icon/icon.js'></script>
@@ -14,6 +15,7 @@
 		<script src='icon/lib/gear.js'></script>
 		<script src='jslib/utils.js'></script>
 		<script src='jslib/dragger.js'></script>
+		<script src='jslib/voyclogo.js'></script>
 		<link  href='minimal.css' rel='stylesheet' type='text/css'></link>
 		<script src='minimal.js'></script>
 <?php } else { ?>
@@ -920,7 +922,8 @@
 		</div>
 
 		<footer>
-			<a class='ftr'>github</a>
+			<a class='ftr voyclogo' target='_blank' href='http://voyc.com'>voyc</a>
+			<a class='ftr' target='_blank' href='http://github.com/voyc/minimal'>github</a>
 		</footer>
 	</body>
 </html>

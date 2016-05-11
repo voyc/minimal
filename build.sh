@@ -1,7 +1,7 @@
 # build icon
 
 # compile the js files with google closure compiler
-python compilejs.py >min.js
+python compilejs.py $1 >min.js
 
 # compress css file with yui
 cat normalize.css/normalize.css icon/icon.css minimal.css >min.css

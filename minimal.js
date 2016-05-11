@@ -2,16 +2,19 @@
 	class Minimal
 	@constructor
 */
-Minimal = function() {
+voyc.Minimal = function() {
 	// is singleton
-	if (Minimal._instance) return Minimal._instance;
-	else Minimal._instance = this;
+	if (voyc.Minimal._instance) return voyc.Minimal._instance;
+	else voyc.Minimal._instance = this;
 
 	this.theme = '';
 	this.popup = null;
 }
 
-Minimal.prototype = {
+voyc.Minimal.prototype = {
+	/**
+		@param {Element|null} [e=null]
+	*/
 	attachAll: function(e) {
 		this.fixInitiallyHidden(e);
 		this.attachShowHide(e);
@@ -33,12 +36,12 @@ Minimal.prototype = {
 	},
 
 	show: function(eid) {
-		var e = $(eid);
+		var e = voyc.$(eid);
 		e.removeAttribute('hidden');
 	},
 
 	hide: function(eid) {
-		var e = $(eid);
+		var e = voyc.$(eid);
 		e.setAttribute('hidden', '');
 	},
 
@@ -68,13 +71,13 @@ Minimal.prototype = {
 			elems[i].classList.add('expander');
 			elems[i].classList.add('collapsed');
 			var f = elems[i].getAttribute('expand');
-			$(f).classList.add('expandable');
-			$(f).classList.add('collapsed');
+			voyc.$(f).classList.add('expandable');
+			voyc.$(f).classList.add('collapsed');
 			var self = this;
 			elems[i].addEventListener('click', function(event) {
 				var e = event.currentTarget;
 				var f = e.getAttribute('expand');
-				var t = $(f);
+				var t = voyc.$(f);
 				var b = (t.classList.contains('collapsed'));
 				if (b) {
 					self.expand(e,t);
@@ -161,7 +164,7 @@ Minimal.prototype = {
 			// remove whitespace from between a group of toggle buttons
 			var name = d.getAttribute('toggle');
 			if (name) {
-				removeWhiteSpace( d.parentElement);
+				voyc.removeWhiteSpace( d.parentElement);
 			}
 		}
 	},
@@ -179,13 +182,13 @@ Minimal.prototype = {
 				var isLoading = !(name == self.theme);
 				if (isLoading) {
 					if (self.theme) {
-						unloadCss(self.path + self.theme + '.css');
+						voyc.unloadCss(self.path + self.theme + '.css');
 					}
 					self.theme = name;
-					loadCss(self.path + self.theme + '.css');
+					voyc.loadCss(self.path + self.theme + '.css');
 				}
 				else {
-					unloadCss(self.path + self.theme + '.css');
+					voyc.unloadCss(self.path + self.theme + '.css');
 					self.theme = '';
 				}
 			}, false);
@@ -224,7 +227,7 @@ Minimal.prototype = {
 		var elem = element || document;
 
 		if (!this.dragger) {
-			this.dragger = new Dragger();
+			this.dragger = new voyc.Dragger();
 		}
 
 		var drags = elem.querySelectorAll('[drag]');
@@ -304,7 +307,7 @@ Minimal.prototype = {
 	},
 	
 	killWait: function() {
-		if ($('wait')) {
+		if (voyc.$('wait')) {
 			this.hide('wait');
 		}
 	},
@@ -314,13 +317,13 @@ Minimal.prototype = {
 		if (this.popup) {
 			if (this.popup.hasAttribute('modal')) {
 				this.popup.reset();
-				$('dialog-msg').innerHTML = '';
-				$('modalcontainer').setAttribute('hidden','')
-				$('offscreen').appendChild(this.popup);
+				voyc.$('dialog-msg').innerHTML = '';
+				voyc.$('modalcontainer').setAttribute('hidden','')
+				voyc.$('offscreen').appendChild(this.popup);
 			}
 			else {
 				this.popup.classList.remove('open');
-				window.removeEventListener('click', clickAnywhereToClose, false);
+				window.removeEventListener('click', voyc.clickAnywhereToClose, false);
 			}
 			this.popup = null;
 		}
@@ -332,19 +335,19 @@ Minimal.prototype = {
 			this.closePopup();
 		}
 		if (!prev || prev.id != eid) {
-			if ($(eid).hasAttribute('modal')) {
-				$('modalcontainer').removeAttribute('hidden');
-				$('dialog').appendChild($(eid));
-				$('modaltitle').innerHTML = $(eid).getAttribute('title')
+			if (voyc.$(eid).hasAttribute('modal')) {
+				voyc.$('modalcontainer').removeAttribute('hidden');
+				voyc.$('dialog').appendChild(voyc.$(eid));
+				voyc.$('modaltitle').innerHTML = voyc.$(eid).getAttribute('title')
 			}
 			else {
-				$(eid).classList.add('open');
+				voyc.$(eid).classList.add('open');
 				setTimeout(function() {
-					window.addEventListener('click', clickAnywhereToClose, false);
+					window.addEventListener('click', voyc.clickAnywhereToClose, false);
 				}, 25);
 			}
-			this.popup = $(eid);
-			$(eid).dispatchEvent(new Event('open'))
+			this.popup = voyc.$(eid);
+			voyc.$(eid).dispatchEvent(new Event('open'))
 		}
 	},
 }
@@ -352,7 +355,7 @@ Minimal.prototype = {
 /* 
 	global function
 */
-clickAnywhereToClose = function(event) {
+voyc.clickAnywhereToClose = function(event) {
 	var isInPopup = false;
 	var e = event.target;
 	while (e) {
@@ -364,34 +367,34 @@ clickAnywhereToClose = function(event) {
 	}
 
 	if (!isInPopup) {
-		var m = new Minimal();
+		var m = new voyc.Minimal();
 		m.closePopup();
 	}
 }
 
-show = function(eid) {
-	(new Minimal).show(eid);
+voyc.show = function(eid) {
+	(new voyc.Minimal).show(eid);
 }
-hide = function(eid) {
-	(new Minimal).hide(eid);
+voyc.hide = function(eid) {
+	(new voyc.Minimal).hide(eid);
 }
-openPopup = function(eid) {
-	(new Minimal).openPopup(eid);
+voyc.openPopup = function(eid) {
+	(new voyc.Minimal).openPopup(eid);
 }
-closePopup = function() {
-	(new Minimal).closePopup();
+voyc.closePopup = function() {
+	(new voyc.Minimal).closePopup();
 }
-wait = function() {
-	(new Minimal).wait();
+voyc.wait = function() {
+	(new voyc.Minimal).wait();
 }
-killWait = function() {
-	(new Minimal).killWait();
+voyc.killWait = function() {
+	(new voyc.Minimal).killWait();
 }
 
 /* 
 	DOM event handler
 */
 window.addEventListener('load', function() {
-	var minimal = new Minimal();
+	var minimal = new voyc.Minimal();
 	minimal.attachAll();
 }, false);
