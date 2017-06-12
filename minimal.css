@@ -221,6 +221,9 @@ li[drag]:before {
 	visibility:visible;
 	transition:max-height 200ms;
 }
+.dropdown.fromheader, .leftnav.fromheader {
+	top:2rem;
+}
 
 /* popup close button */
 .closex {
@@ -356,9 +359,15 @@ header {
 header.fixed {
 	position:fixed;
 	top:0px;
+	z-index:1;
 }
 header.fixed + * {  /* adjacent sibling selector */
 	padding-top:2rem;  /* same height as the header */
+}
+a.navlabel {
+	padding-top:2rem;  /* same height as the header */
+	z-index:-1;
+	position:relative;
 }
 header .group {
 	margin:.4rem;

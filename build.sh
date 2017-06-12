@@ -4,7 +4,7 @@
 python compilejs.py $1 >min.js
 
 # compress css file with yui
-cat normalize.css/normalize.css icon/icon.css minimal.css >min.css
+cat normaleyes.css icon/icon.css minimal.css >min.css
 java -jar ~/bin/yuicompressor/yuicompressor-2.4.2.jar min.css -o min.css --charset utf-8
 
 # prepare index.php for production use

@@ -17,11 +17,13 @@ voyc.Minimal.prototype = {
 	*/
 	attachAll: function(e) {
 		this.fixInitiallyHidden(e);
+		this.fixFixedHeader(e);
 		this.attachShowHide(e);
 		this.attachExpanders(e);
 		this.attachOpenClose(e);
 		this.attachToggleButtons(e);
 		this.attachCssButtons(e);
+		this.attachFixHeaderButtons(e);
 		this.attachSelect(e);
 		this.attachDnd(e);
 	},
@@ -32,6 +34,47 @@ voyc.Minimal.prototype = {
 		for (var i=0; i<elems.length; i++) {
 			elems[i].removeAttribute('initially');
 			elems[i].removeAttribute('hidden');
+		}
+	},
+
+	fixFixedHeader: function(element) {
+		// always use document
+		var elem = element || document;
+
+		// find header element
+		var header = elem.querySelector('header');
+		var isFixed = header.classList.contains('fixed');
+		var ht = header.offsetHeight;
+		var fht = (isFixed) ? ht : 0;
+		
+		// fix padding-top of the scrolling element, the next sibling after the fixed header
+		var fscroller = elem.querySelector('header + *');
+		if (fscroller) {
+			fscroller.style.paddingTop = fht + 'px';
+		}
+
+		// likewise fix padding-top of all anchor navlabels in the scrolling element
+		var elems = elem.querySelectorAll('.navlabel');
+		for (var i=0; i<elems.length; i++) {
+			elems[i].style.paddingTop = fht + 'px';
+		}
+
+		// fix top of all popup dialogs positioned just under the header
+		elems = elem.querySelectorAll('.dropdown.fromheader, .leftnav.fromheader');
+		for (var i=0; i<elems.length; i++) {
+			elems[i].style.top = ht + 'px';
+		}
+
+		// toggle class of fixheader buttons
+		var fixbtns = elem.querySelectorAll('[fixheader]');
+		for (var d,i=0; i<fixbtns.length; i++) {
+			d = fixbtns[i];
+			if (isFixed) {
+				d.classList.add('down');
+			}
+			else {
+				d.classList.remove('down');
+			}
 		}
 	},
 
@@ -190,6 +233,27 @@ voyc.Minimal.prototype = {
 				else {
 					voyc.unloadCss(self.path + self.theme + '.css');
 					self.theme = '';
+				}
+				// self.fixFixedHeader(); needs to happen after css successfully loaded or unloaded
+			}, false);
+		}
+	},
+
+	attachFixHeaderButtons: function(element) {
+		var elem = element || document;
+		var isFixed = elem.querySelector('header').classList.contains('fixed');
+		var fixbtns = elem.querySelectorAll('[fixheader]');
+		for (var d,i=0; i<fixbtns.length; i++) {
+			d = fixbtns[i];
+			if (isFixed) {
+				d.classList.add('down');
+			}
+			var self = this;
+			d.addEventListener('click', function(event) {
+				var header = elem.querySelector('header');
+				if (header) {
+					header.classList.toggle('fixed');
+					self.fixFixedHeader(elem);
 				}
 			}, false);
 		}

@@ -7,9 +7,9 @@
 		<style>[hidden] {display:none ! important;}</style>
 		
 <?php if (false) { ?>
-		<script>/** @const */ var voyc = {}; window['voyc'] = {};</script>
-		<link  href='normalize.css/normalize.css' rel='stylesheet' type='text/css'></link>
+		<link  href='normaleyes.css' rel='stylesheet' type='text/css'></link>
 		<link  href='icon/icon.css' rel='stylesheet' type='text/css'></link>
+		<script src='namespace.js'></script>
 		<script src='icon/icon.js'></script>
 		<script src='icon/lib/menu.js'></script>
 		<script src='icon/lib/gear.js'></script>
@@ -34,7 +34,7 @@
 			</div>
 			<div class='group tright'>
 				<icon class='bit' type=draw name=gear open='dropdown-modeless'></icon>
-			</hdr>
+			</div>
 		</header>
 
 		<section class='narrative' id='narrative-section'>
@@ -63,8 +63,7 @@
 			</blockquote>
 			
 			<!------------------------------------------------------>
-			<a id='appearance'></a>
-			<h2>Appearance (classes)</h2>
+			<h2><a id='appearance' class='navlabel'>Appearance (classes)</a></h2>
 			<p>Appearance is implemented by adding classes to elements.</p>
 			<h3>.panel</h3>
 			<p>A panel has a border around a body with an optional header.</p>
@@ -178,11 +177,10 @@
 
 			<h3>.fixed</h3>
 			<p>Add the .fixed class to the header element, and it will not scroll along with the rest of the body.</p>
-			<p><button toggle onclick="document.getElementsByTagName('header')[0].classList.toggle('fixed')">Fix Header</button></p>
+			<p><button toggle fixheader>Fixed Header</button></p>
 			
 			<!------------------------------------------------------>
-			<a id='behaviour'></a>
-			<h2>Behaviour (attributes)</h2>
+			<h2><a id='behaviour' class='navlabel'>Behaviour (attributes)</a></h2>
 			<p>Behaviour is implemented by adding attributes to elements.</p>
 
 			<h3>Initially Hidden</h3>
@@ -323,8 +321,7 @@
 			</p>
 			
 			<!------------------------------------------------------>
-			<a id='topics'></a>
-			<h2>Topics</h2>
+			<h2><a id='topics' class='navlabel'>Topics</a></h2>
 
 			<h3>Files</h3>
 			<ul>
@@ -389,8 +386,7 @@
 			</p>
 			
 			<!------------------------------------------------------>
-			<a id='alternatives'></a>
-			<h2>Alternatives</h2>
+			<h2><a id='alternatives' class='navlabel'>Alternatives</a></h2>
 
 			<h3>Attribute vs Class</h3>
 			<p>CSS selectors now allow us to apply styles based on tagname, attribute, or classname.  
@@ -471,8 +467,7 @@
 			<p>Yeah?  What about 'em?</p>
 
 			<!------------------------------------------------------>
-			<a id='font'></a>
-			<h2>Font</h2>
+			<h2><a id='font' class='navlabel'>Font</a></h2>
 			<p>The browser makes use of three default fonts, and we copy this scheme.
 			<ul>
 				<li>sans-serif - The default.</li>
@@ -539,8 +534,7 @@
 			<a href=http://www.w3schools.com/cssref/css_websafe_fonts.asp>see "Web Safe Font Combinations" at W3 Schools</a><br/>
 			
 			<!------------------------------------------------------>
-			<a id='color'></a>
-			<h2>Color</h2>
+			<h2><a id='color' class='navlabel'>Color</h2>
 			<p>We use six colors (b&w + rgb + yellow):</p>
 			<ul>
 				<li><span class='bblk'>black </span></li>
@@ -560,8 +554,7 @@
 			
 			<!------------------------------------------------------>
 			<!------------------------------------------------------>
-			<a id='thoughts'></a>
-			<h2>Great Thoughts</h2>
+			<h2><a id='thoughts' class='navlabel'>Great Thoughts</a></h2>
 			
 			<h3>Information Architecture</h3>
 			
@@ -866,7 +859,7 @@
 
 		<!---- modeless dialogs ----------------------------------------->
 
-		<nav initially hidden class='panel popup leftnav blu' id='leftnav-modeless'>
+		<nav initially hidden class='panel popup leftnav fromheader blu' id='leftnav-modeless'>
 			<div close class='closex'>&times;</div>
 			<h3>Go To...</h3>
 			<p><a close href='#appearance'>Appearance</a></p>
@@ -877,7 +870,7 @@
 			<p><a close href='#color'>Color</a></p>
 			<p><a close href='#thoughts'>Great Thoughts</a></p>
 		</nav>
-		<aside initially hidden class='panel popup dropdown blu' id='dropdown-modeless'>
+		<aside initially hidden class='panel popup dropdown fromheader blu' id='dropdown-modeless'>
 			<div close='dropdown-modeless' class='closex'>&times;</div>
 			<h3>Settings</h3>
 			<p>Theme:
@@ -886,7 +879,7 @@
 				<button toggle=theme css='google'  >Google</button>
 			</p>
 			<p>Header:
-				<button toggle class='down' onclick='fixheader()'>Fixed Header</button>
+				<button toggle fixheader>Fixed Header</button>
 			<p>
 		</aside>
 
