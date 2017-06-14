@@ -240,7 +240,8 @@ voyc.Minimal.prototype = {
 
 	attachFixHeaderButtons: function(element) {
 		var elem = element || document;
-		var isFixed = elem.querySelector('header').classList.contains('fixed');
+		var header = elem.querySelector('header');
+		var isFixed = header && header.classList.contains('fixed');
 		var fixbtns = elem.querySelectorAll('[fixheader]');
 		for (var d,i=0; i<fixbtns.length; i++) {
 			d = fixbtns[i];
