@@ -38,13 +38,12 @@ voyc.Minimal.prototype = {
 	},
 
 	fixFixedHeader: function(element) {
-		// always use document
 		var elem = element || document;
 
 		// find header element
 		var header = elem.querySelector('header');
-		var isFixed = header.classList.contains('fixed');
-		var ht = header.offsetHeight;
+		var isFixed = header && header.classList.contains('fixed');
+		var ht = (header) ? header.offsetHeight : 0;
 		var fht = (isFixed) ? ht : 0;
 		
 		// fix padding-top of the scrolling element, the next sibling after the fixed header
