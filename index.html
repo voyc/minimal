@@ -15,7 +15,6 @@
 		<script src='icon/lib/gear.js'></script>
 		<script src='jslib/utils.js'></script>
 		<script src='jslib/dragger.js'></script>
-		<script src='jslib/voyclogo.js'></script>
 		<link  href='minimal.css' rel='stylesheet' type='text/css'></link>
 		<script src='minimal.js'></script>
 <?php } else { ?>
@@ -53,9 +52,9 @@
 			</p>
 			<p>Required submodules:</p>
 			<ul>
-				<li>https://github.com/necolas/normalize.css</li>
-				<li>https://github.com/hagstrand/jslib.git</li>
-				<li>https://github.com/hagstrand/icon.git</li>
+				<!-- <li>https://github.com/necolas/normalize.css</li> -->
+				<li>https://github.com/voyc/jslib</li>
+				<li>https://github.com/voyc/icon</li>
 			</ul>
 			<blockquote class='panel red'>
 				<p>Your desires are so complex and contradictory &mdash; no wonder the society you create is also complex and contradictory.
@@ -395,16 +394,16 @@
 			<p>As a general rule, we use a classname for appearance, and an attribute for behavior.</p>
 
 			<h3>hidden attribute</h3>
-			<p>Elements are best hidden with the style display:block, because this removes all margins and padding completely from the HTML.</p>
-			<p>For awhile we used a .hidden classname defined as display:block.</p>
+			<p>Elements are best hidden with the style display:none, because this removes all margins and padding completely from the HTML.</p>
+			<p>For awhile we used a .hidden classname defined as display:none.</p>
 			<p>Now, though, we use the [hidden] attribute instead.
 			This attribute was introduced wth HTML5 and is not yet fully supported [Sep 2015].
-			Normalize.css defines it as display:block.</p>
+			Normalize.css defines it as display:none.</p>
 
 			<h3>template tag</h3>
 			<p>The template tag is a semantic way to hide content.  
 			Introduced with HTML5 and not yet fully supported [Aug 2015].</p>
-			<p>In some cases we are using this tag, but we add the hidden tag to it.</p>
+			<p>In some cases we are using this tag, but we add the [hidden] attribute to it.</p>
 
 			<h3>summary/details tags</h3>
 			<p>HTML5 specifies the <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> tags, such that clicking on the <code>&lt;summary&gt;</code> tag 
@@ -457,14 +456,13 @@
 			<p>We are not yet using this tag [Aug 2015].</p>
 
 			<h3>pseudo classes</h3>
-			<p>a  - link states, pseudo-classes</p>
+			<p>Reminder: a - link states, pseudo-classes.</p>
 			<ul>
 				<li>a:link</li>
 				<li>a:visited</li>
 				<li>a:hover</li>
 				<li>a:active</li>
 			</ul>
-			<p>Yeah?  What about 'em?</p>
 
 			<!------------------------------------------------------>
 			<h2><a id='font' class='navlabel'>Font</a></h2>
@@ -915,8 +913,8 @@
 		</div>
 
 		<footer>
-			<a class='ftr voyclogo' target='_blank' href='http://voyc.com'>voyc</a>
-			<a class='ftr' target='_blank' href='http://github.com/voyc/minimal'>github</a>
+			<div class='group'><a href='http://voyc.com/about' class='ftr voyc'><img src='voyc.svg'/></a></div>
+			<div class='group tright'><a href='https://github.com/voyc/minimal' class='ftr git'><img src='github.svg'/></a></div>
 		</footer>
 	</body>
 </html>
