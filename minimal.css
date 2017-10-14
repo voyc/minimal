@@ -51,7 +51,7 @@ ul,ol {
 	padding-left:2rem;
 	padding-right:1rem;
 }
-table {
+table.horz {
 	margin-left:1rem;
 	margin-right:1rem;
 }
