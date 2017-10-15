@@ -9,6 +9,7 @@ voyc.Minimal = function() {
 
 	this.theme = '';
 	this.popup = null;
+	this.dropcb = null;
 }
 
 voyc.Minimal.prototype = {
@@ -287,7 +288,7 @@ voyc.Minimal.prototype = {
 		}
 	},
 				
-	attachDnd: function(element) {
+	attachDnd: function(element, ondropcb) {
 		var elem = element || document;
 
 		if (!this.dragger) {
@@ -356,6 +357,10 @@ voyc.Minimal.prototype = {
 			}
 		}
 
+		// this supports only one client ondrop handler
+		if (ondropcb) {
+			this.dropcb = ondropcb;
+		}
 		this.dragger.addListener(null, 'drop', function(e,x,y,t) {
 			if (t.tagName.toLowerCase() == 'li' || t.tagName.toLowerCase() == 'tr') {
 				t.parentElement.insertBefore(e,t);
@@ -363,6 +368,7 @@ voyc.Minimal.prototype = {
 			else {
 				t.appendChild(e);
 			}
+			(new voyc.Minimal()).dropcb(e,x,y,t);
 		});
 	},
 	
