@@ -42,7 +42,7 @@ $ylo = 255,215,  0  Gold
 .narrative { 
 	border-left: 2px solid rgb(  0,128,128); 
 	border-right:6px solid rgb(178, 34, 34) 
-};
+}
 
 h1 { color:rgb(  0,  0,  0);}
 h2 { color:rgb(  0,128,128);}
