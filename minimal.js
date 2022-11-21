@@ -291,6 +291,8 @@ voyc.Minimal.prototype = {
 	attachDnd: function(element, ondropcb) {
 		var elem = element || document;
 
+		if (!voyc.Dragger) return
+
 		if (!this.dragger) {
 			this.dragger = new voyc.Dragger();
 		}
