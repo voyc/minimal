@@ -421,6 +421,10 @@ voyc.Minimal.prototype = {
 			this.popup = voyc.$(eid);
 			voyc.$(eid).dispatchEvent(new Event('open'))
 		}
+		var fields = this.popup.querySelectorAll('input')
+		for (let i = 0; i < fields.length; i++)
+			if (fields[i].hasAttribute('autofocus'))
+				fields[i].focus()
 	},
 }
 
