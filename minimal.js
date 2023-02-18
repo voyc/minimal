@@ -414,9 +414,11 @@ voyc.Minimal.prototype = {
 			}
 			else {
 				voyc.$(eid).classList.add('open');
-				setTimeout(function() {
-					window.addEventListener('click', voyc.clickAnywhereToClose, false);
-				}, 25);
+				if (!voyc.$(eid).hasAttribute('stay')) {
+					setTimeout(function() {
+						window.addEventListener('click', voyc.clickAnywhereToClose, false);
+					}, 25);
+				}
 			}
 			this.popup = voyc.$(eid);
 			voyc.$(eid).dispatchEvent(new Event('open'))
